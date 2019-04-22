@@ -13,9 +13,9 @@
 - (NSLayoutConstraint *)equallyRelatedConstraintWithView:(UIView *)view attribute:(NSLayoutAttribute)attribute;
 @end
 
-#pragma mark - UIView+ACConstraintBasedLayoutExtensions
+#pragma mark - UIView+ATConstraintBasedLayoutExtensions
 
-@implementation UIView (ACConstraintBasedLayoutExtensions)
+@implementation UIView (ATConstraintBasedLayoutExtensions)
 
 - (NSLayoutConstraint *)equallyRelatedConstraintWithView:(UIView *)view attribute:(NSLayoutAttribute)attribute {
     return [NSLayoutConstraint constraintWithItem:view
