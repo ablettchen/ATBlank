@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -34,6 +35,8 @@ typedef NS_ENUM(NSUInteger, ATBlankType) {
 @property (assign, getter=isImageAnimating, nonatomic) BOOL imageAnimating; ///< 是否正在做动画，默认NO
 @property (strong, nonatomic) CAAnimation *animation;                       ///< 动画
 @property (copy, nonatomic) void (^tapBlock)(void);                         ///< 点击事件
+
+@property (copy, nonatomic, nullable) UIView *customView;
 
 /**
  空白页

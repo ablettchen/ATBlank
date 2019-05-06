@@ -506,18 +506,22 @@ static char const * const kBlankView = "kBlankView";
         
         [view prepareForReuse];
         
-        view.verticalSpace = self.blank.spaceHeight;
-        view.imageView.image = (self.blank.isImageAnimating)?self.blank.loadingImage:self.blank.image;
-        
-        if (self.blank.title) view.titleLabel.attributedText = self.blank.title;
-        if (self.blank.desc) view.detailLabel.attributedText = self.blank.desc;
-        if (self.blank.btnImage) {
-            [view.button setImage:self.blank.image forState:UIControlStateNormal];
-        }else if (self.blank.btnTitle) {
-            [view.button setAttributedTitle:self.blank.btnTitle forState:UIControlStateNormal];
-            [view.button setBackgroundImage:self.blank.btnBackgroundImage forState:UIControlStateNormal];
+        if (self.blank.customView) {
+            view.customView = self.blank.customView;
+        }else {
+            view.verticalSpace = self.blank.spaceHeight;
+            view.imageView.image = (self.blank.isImageAnimating)?self.blank.loadingImage:self.blank.image;
+            
+            if (self.blank.title) view.titleLabel.attributedText = self.blank.title;
+            if (self.blank.desc) view.detailLabel.attributedText = self.blank.desc;
+            if (self.blank.btnImage) {
+                [view.button setImage:self.blank.image forState:UIControlStateNormal];
+            }else if (self.blank.btnTitle) {
+                [view.button setAttributedTitle:self.blank.btnTitle forState:UIControlStateNormal];
+                [view.button setBackgroundImage:self.blank.btnBackgroundImage forState:UIControlStateNormal];
+            }
         }
-        
+
         view.verticalOffset = self.blank.verticalOffset;
         view.backgroundColor = self.blank.backgroundColor;
         view.hidden = NO;
