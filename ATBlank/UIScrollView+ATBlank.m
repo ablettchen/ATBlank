@@ -225,17 +225,14 @@
 #pragma mark - Auto-Layout Configuration
 
 - (void)setupConstraints {
-    
-    self.frame = self.superview.frame;
-    self.center = self.superview.center;
     // First, configure the content view constaints
     // The content view must alway be centered to its superview
-    NSLayoutConstraint *centerXConstraint = [self equallyRelatedConstraintWithView:self.contentView attribute:NSLayoutAttributeCenterX];
-    NSLayoutConstraint *centerYConstraint = [self equallyRelatedConstraintWithView:self.contentView attribute:NSLayoutAttributeCenterY];
+    NSLayoutConstraint *centerXConstraint = [self equallyRelatedConstraintWithView:_contentView attribute:NSLayoutAttributeCenterX];
+    NSLayoutConstraint *centerYConstraint = [self equallyRelatedConstraintWithView:_contentView attribute:NSLayoutAttributeCenterY];
     
     [self addConstraint:centerXConstraint];
     [self addConstraint:centerYConstraint];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:0 metrics:nil views:@{@"contentView": self.contentView}]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:0 metrics:nil views:@{@"contentView": _contentView}]];
     
     // When a custom offset is available, we adjust the vertical constraints' constants
     if (self.verticalOffset != 0 && self.constraints.count > 0) {
@@ -244,8 +241,30 @@
     
     // If applicable, set the custom view's constraints
     if (_customView) {
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[customView]|" options:0 metrics:nil views:@{@"customView":_customView}]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[customView]|" options:0 metrics:nil views:@{@"customView":_customView}]];
+        NSLayoutConstraint *centerXConstraint = [self equallyRelatedConstraintWithView:_customView attribute:NSLayoutAttributeCenterX];
+        NSLayoutConstraint *centerYConstraint = [self equallyRelatedConstraintWithView:_customView attribute:NSLayoutAttributeCenterY];
+        CGFloat customViewHeight = CGRectGetHeight(_customView.frame);
+        CGFloat customViewWidth = CGRectGetWidth(_customView.frame);
+        NSLayoutConstraint *heightConstarint;
+        NSLayoutConstraint *widthConstarint;
+        if (customViewHeight == 0) {
+            heightConstarint = [NSLayoutConstraint constraintWithItem:_customView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:1.f constant:0.f];
+        }else {
+            heightConstarint = [NSLayoutConstraint constraintWithItem:_customView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:1.f constant:0.f];
+        }
+        if(customViewWidth == 0) {
+            widthConstarint = [NSLayoutConstraint constraintWithItem:_customView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.f constant:0.f];
+        }else {
+            widthConstarint = [NSLayoutConstraint constraintWithItem:_customView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.f constant:0.f];
+        }
+        // When a custom offset is available, we adjust the vertical constraints' constants
+        if (_verticalOffset != 0) {
+            centerYConstraint.constant = _verticalOffset;
+        }
+        [self addConstraints:@[centerXConstraint, centerYConstraint]];
+        [self addConstraints:@[heightConstarint, widthConstarint]];
+        //[self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[customView]|" options:0 metrics:nil views:@{@"customView":_customView}]];
+        //[self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[customView]|" options:0 metrics:nil views:@{@"customView":_customView}]];
     }else {
         CGFloat width = CGRectGetWidth(self.frame) ? : CGRectGetWidth([UIScreen mainScreen].bounds);
         CGFloat padding = roundf(width/16.0);
@@ -256,59 +275,58 @@
         NSDictionary *metrics = @{@"padding": @(padding)};
         
         // Assign the image view's horizontal constraints
-        if (_imageView.superview) {
-            
+        if ([self canShowImage]) {
+            _imageView.hidden = NO;
             [subviewStrings addObject:@"imageView"];
             views[[subviewStrings lastObject]] = _imageView;
             
-            [self.contentView addConstraint:[self.contentView equallyRelatedConstraintWithView:_imageView attribute:NSLayoutAttributeCenterX]];
+            [self.contentView addConstraint:[_contentView equallyRelatedConstraintWithView:_imageView attribute:NSLayoutAttributeCenterX]];
+        }else {
+            _imageView.hidden = YES;
         }
         
         // Assign the title label's horizontal constraints
         if ([self canShowTitle]) {
-            
+            _titleLabel.hidden = NO;
             [subviewStrings addObject:@"titleLabel"];
             views[[subviewStrings lastObject]] = _titleLabel;
-            
-            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding@750)-[titleLabel(>=0)]-(padding@750)-|"
+            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding)-[titleLabel(>=0)]-(padding)-|"
                                                                                      options:0 metrics:metrics views:views]];
-        }
-        // or removes from its superview
-        else {
+        }else {
+            // or removes from its superview
+            _titleLabel.hidden = YES;
             [_titleLabel removeFromSuperview];
             _titleLabel = nil;
         }
         
         // Assign the detail label's horizontal constraints
         if ([self canShowDetail]) {
-            
+            _detailLabel.hidden = NO;
             [subviewStrings addObject:@"detailLabel"];
             views[[subviewStrings lastObject]] = _detailLabel;
-            
-            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding@750)-[detailLabel(>=0)]-(padding@750)-|"
+            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding)-[detailLabel(>=0)]-(padding)-|"
                                                                                      options:0 metrics:metrics views:views]];
-        }
-        // or removes from its superview
-        else {
+        }else {
+            // or removes from its superview
+            _detailLabel.hidden = YES;
             [_detailLabel removeFromSuperview];
             _detailLabel = nil;
         }
         
         // Assign the button's horizontal constraints
         if ([self canShowButton]) {
-            
+            _button.hidden = NO;
             [subviewStrings addObject:@"button"];
             views[[subviewStrings lastObject]] = _button;
             
-            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding@750)-[button(>=0)]-(padding@750)-|"
+            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding)-[button(>=0)]-(padding)-|"
                                                                                      options:0 metrics:metrics views:views]];
-        }
-        // or removes from its superview
-        else {
+        }else {
+            // or removes from its superview
+            _button.hidden = YES;
             [_button removeFromSuperview];
             _button = nil;
         }
-        
         
         NSMutableString *verticalFormat = [NSMutableString new];
         
@@ -319,7 +337,7 @@
             [verticalFormat appendFormat:@"[%@]", string];
             
             if (i < subviewStrings.count-1) {
-                [verticalFormat appendFormat:@"-(%.f@750)-", verticalSpace];
+                [verticalFormat appendFormat:@"-(%.f)-", verticalSpace];
             }
         }
         
