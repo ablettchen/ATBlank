@@ -62,7 +62,6 @@ NS_INLINE UIImage *blankImageNamed(NSString *imageName) {
         }
         case ATBlankTypeNoData:{
             blank.title = [[NSAttributedString alloc] initWithString:@"暂时没有数据～"];
-            blank.tapEnable = NO;
             break;
         }
         case ATBlankTypeNoNetwork:{
