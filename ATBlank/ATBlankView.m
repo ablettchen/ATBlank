@@ -152,7 +152,7 @@
     
     if ([self canShowImage]) {
         [self.contentView addSubview:self.imageView];
-        [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.imageView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(lastAttribute);
             make.centerX.equalTo(self.contentView);
             make.size.mas_equalTo(self.imageView.image.size);

@@ -112,6 +112,8 @@ static char const * const kBlank = "kBlank";
 - (void)reloadBlank {
     if ([self canDisplay] && [self itemsCount] == 0) {
         ATBlankView *view = self.blankView;
+        [view reset];
+        
         if (view.superview == nil) {
             if ([self isKindOfClass:[UITableView class]] || [self isKindOfClass:[UICollectionView class]] || self.subviews.count > 1) {
                 [self insertSubview:view atIndex:0];
@@ -119,16 +121,17 @@ static char const * const kBlank = "kBlank";
                 [self addSubview:view];
             }
         }
-        [view reset];
-        view.blank = self.blank;
-        view.hidden = NO;
-        [view prepare];
         
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.size.equalTo(self);
-            make.center.equalTo(self);
-            //make.edges.equalTo(self);
+            make.size.centerX.centerY.equalTo(self);
         }];
+        
+        view.blank = self.blank;
+        view.hidden = NO;
+        
+        [view prepare];
+        self.scrollEnabled = NO;
+        
     }else if ([self isBlankVisible]) {
         [self invalidate];
     }
