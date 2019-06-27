@@ -9,7 +9,6 @@
 
 #import "UIScrollView+ATBlank.h"
 #import <objc/runtime.h>
-#import "ATBlankView.h"
 
 #if __has_include(<Masonry/Masonry.h>)
 #import <Masonry/Masonry.h>
