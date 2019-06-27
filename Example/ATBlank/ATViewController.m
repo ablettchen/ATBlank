@@ -25,22 +25,25 @@
         view.frame = self.view.bounds;
         view;
     });
-    
-    ATBlank *blank = failureBlank();
+
+    ATBlank *blank = defaultBlank(ATBlankTypeFailure);
     blank.desc = [[NSAttributedString alloc] initWithString:@"10001"];
     blank.tapBlock = ^{
-        NSLog(@"tap action");
-        [scrollView setBlank:nil];
-        [scrollView reloadBlankData];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            NSLog(@"no data");
-            [scrollView setBlank:noDataBlank()];
-            [scrollView reloadBlankData];
-        });
+        [scrollView blankConfReset];
     };
     [scrollView setBlank:blank];
-    [scrollView reloadBlankData];
+    [scrollView reloadBlank];
+    
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        scrollView.updateBlankConf(^(ATBlankConf * _Nonnull conf) {
+            conf.backgroundColor = [UIColor blackColor];
+            conf.titleFont = [UIFont boldSystemFontOfSize:14];
+            conf.titleColor = [UIColor whiteColor];
+            conf.descFont = [UIFont boldSystemFontOfSize:14];
+            conf.descColor = [UIColor whiteColor];
+        });
+    });
 }
 
 - (void)didReceiveMemoryWarning {

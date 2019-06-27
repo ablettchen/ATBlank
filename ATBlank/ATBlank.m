@@ -25,14 +25,7 @@ NS_INLINE UIImage *blankImageNamed(NSString *imageName) {
     self = [super init];
     if (!self) return nil;
     
-    self.backgroundColor = [UIColor whiteColor];
-    self.verticalOffset = 0.f;
-    self.spaceHeight = 11.f;
-    self.tapEnable = YES;
-    self.imageAnimating = NO;
-    
     self.loadingImage = blankImageNamed(@"blank_loading_circle");
-    
     self.title = [[NSAttributedString alloc] initWithString:@"未设置"];
     self.desc = [[NSAttributedString alloc] initWithString:@"请检查代码"];
     
@@ -52,7 +45,7 @@ NS_INLINE UIImage *blankImageNamed(NSString *imageName) {
     return animation;
 }
 
-+ (ATBlank *)defaultBlankWithType:(enum ATBlankType)type {
++ (ATBlank *)defaultBlank:(enum ATBlankType)type {
     ATBlank *blank = [ATBlank new];
     blank.image = blankImage(type);
     switch (type) {
@@ -74,7 +67,7 @@ NS_INLINE UIImage *blankImageNamed(NSString *imageName) {
     return blank;
 }
 
-+ (UIImage *)defaultImageWithType:(enum ATBlankType)type {
++ (UIImage *)defaultImage:(enum ATBlankType)type {
     switch (type) {
         case ATBlankTypeFailure:{
             return blankImageNamed(@"blank_failure");

@@ -9,20 +9,24 @@
 
 #import <UIKit/UIKit.h>
 #import "ATBlank.h"
+#import "ATBlankView.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIScrollView (ATBlank)
 
-@property (assign, readonly, getter=isBlankVisible, nonatomic) BOOL blankVisible; ///< 空白页是否可见
+@property (nonatomic, copy, readonly) void(^updateBlankConf)(void(^block)(ATBlankConf *conf));
+
+@property (assign, readonly, nonatomic) BOOL isBlankVisible;
 
 - (void)setBlank:(ATBlank * _Nullable)blank;
 
-/** 刷新l空白页 */
-- (void)reloadBlankData;
+- (void)reloadBlank;
 
-/** 获取列表条数 */
-- (NSInteger)at_itemsCount;
+- (void)blankConfReset;
+
+- (NSInteger)itemsCount;
 
 @end
 
