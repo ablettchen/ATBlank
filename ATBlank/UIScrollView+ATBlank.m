@@ -96,6 +96,7 @@ static char const * const kBlank = "kBlank";
 }
 
 - (void)tapAction:(UITapGestureRecognizer *)sender {
+    if (!self.blank.isTapEnable) {return;}
     if (self.blank.tapBlock) {
         self.blank.tapBlock();
     }
