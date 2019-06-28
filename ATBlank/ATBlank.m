@@ -25,6 +25,10 @@ NS_INLINE UIImage *blankImageNamed(NSString *imageName) {
     self = [super init];
     if (!self) return nil;
     
+    self.type = ATBlankTypeFailure;
+    self.isTapEnable = YES;
+    self.isAnimating = NO;
+    
     self.loadingImage = blankImageNamed(@"blank_loading_circle");
     self.title = [[NSAttributedString alloc] initWithString:@"未设置"];
     self.desc = [[NSAttributedString alloc] initWithString:@"请检查代码"];
