@@ -87,7 +87,7 @@ static char const * const kBlank = "kBlank";
 }
 
 - (void)invalidate {
-    if (!self.blankView) {
+    if (self.blankView) {
         [self.blankView reset];
         self.blankView.hidden = YES;
         [self.blankView removeFromSuperview];
