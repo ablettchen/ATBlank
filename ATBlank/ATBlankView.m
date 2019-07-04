@@ -36,7 +36,6 @@
 - (instancetype)init {
     self = [super init];
     if (!self) return nil;
-    [self addSubview:self.contentView];
     self.update(^(ATBlankConf * _Nonnull conf) {
     });
     return self;
@@ -117,7 +116,7 @@
         self.descLabel.font = self.conf.descFont;
         self.descLabel.textColor = self.conf.descColor;
         
-        self.userInteractionEnabled = self.conf.tapEnable;
+        self.userInteractionEnabled = self.conf.isTapEnable;
     };
 }
 
@@ -227,7 +226,7 @@
     self.verticalOffset = 0.0;
     self.titleToImagePadding = 15.0;
     self.descToTitlePadding = 10.0;
-    self.tapEnable = true;
+    self.isTapEnable = true;
 }
 
 @end

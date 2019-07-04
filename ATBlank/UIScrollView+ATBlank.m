@@ -75,7 +75,7 @@ static char const * const kBlank = "kBlank";
             conf.verticalOffset         = conf_.verticalOffset;
             conf.titleToImagePadding    = conf_.titleToImagePadding;
             conf.descToTitlePadding     = conf_.descToTitlePadding;
-            conf.tapEnable              = conf_.tapEnable;
+            conf.isTapEnable              = conf_.isTapEnable;
         });
     };
 }

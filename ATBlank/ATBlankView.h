@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) CGFloat titleToImagePadding;
 @property (assign, nonatomic) CGFloat descToTitlePadding;
 
-@property (assign, nonatomic) CGFloat tapEnable;
+@property (assign, nonatomic) CGFloat isTapEnable;
 
 - (void)reset;
 
