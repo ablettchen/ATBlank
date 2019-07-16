@@ -46,7 +46,7 @@ static char const * const kBlank = "kBlank";
     ATBlankView *view = objc_getAssociatedObject(self, &kBlankView);
     if (!view) {
         view = [ATBlankView new];
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(at_tapAction:)];
         tapGesture.delegate = self;
         view.userInteractionEnabled = YES;
         [view addGestureRecognizer:tapGesture];
@@ -82,11 +82,11 @@ static char const * const kBlank = "kBlank";
 
 #pragma mark - Privite
 
-- (BOOL)canDisplay {
+- (BOOL)at_canDisplay {
     return self.blank != nil;
 }
 
-- (void)invalidate {
+- (void)at_invalidate {
     if (self.blankView) {
         [self.blankView reset];
         self.blankView.hidden = YES;
@@ -95,7 +95,7 @@ static char const * const kBlank = "kBlank";
     self.scrollEnabled = YES;
 }
 
-- (void)tapAction:(UITapGestureRecognizer *)sender {
+- (void)at_tapAction:(UITapGestureRecognizer *)sender {
     if (!self.blank.isTapEnable) {return;}
     if (self.blank.tapBlock) {
         self.blank.tapBlock();
@@ -105,12 +105,12 @@ static char const * const kBlank = "kBlank";
 #pragma mark - Public
 
 - (void)setBlank:(ATBlank * _Nullable)blank {
-    if (![self canDisplay]) {[self invalidate];}
+    if (![self at_canDisplay]) {[self at_invalidate];}
     objc_setAssociatedObject(self, &kBlank, blank, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)reloadBlank {
-    if ([self canDisplay] && [self itemsCount] == 0) {
+    if ([self at_canDisplay] && [self itemsCount] == 0) {
         ATBlankView *view = self.blankView;
         [view reset];
         
@@ -133,7 +133,7 @@ static char const * const kBlank = "kBlank";
         self.scrollEnabled = NO;
         
     }else if ([self isBlankVisible]) {
-        [self invalidate];
+        [self at_invalidate];
     }
 }
 
@@ -177,4 +177,5 @@ static char const * const kBlank = "kBlank";
 }
 
 @end
+
 
