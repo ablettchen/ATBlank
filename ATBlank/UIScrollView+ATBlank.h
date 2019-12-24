@@ -16,16 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIScrollView (ATBlank)
 
-@property (nonatomic, copy, readonly) void(^updateBlankConf)(void(^block)(ATBlankConf *conf));
-
-@property (assign, readonly, nonatomic) BOOL isBlankVisible;
-
-- (void)setBlank:(ATBlank * _Nullable)blank;
-
-- (void)reloadBlank;
-
-- (void)blankConfReset;
-
 - (NSInteger)itemsCount;
 
 @end

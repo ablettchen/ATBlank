@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ATBlank'
-  s.version          = '0.2.7'
+  s.version          = '0.3.0'
   s.summary          = 'blank view'
   s.homepage         = 'https://github.com/ablettchen/ATBlank'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -19,7 +19,6 @@ Pod::Spec.new do |s|
   s.source_files     = 'ATBlank/**/*.{h,m}'
   s.resource         = 'ATBlank/ATBlank.bundle'
   s.requires_arc     = true
-  
   
   s.dependency 'Masonry'
   s.dependency 'ATCategories'
