@@ -93,7 +93,7 @@ static char const * const kBlank = "kBlank";
         [self.blankView removeFromSuperview];
     }
     if ([self isKindOfClass:UIScrollView.class]) {
-        UIScrollView *sv = self;
+        UIScrollView *sv = (UIScrollView *)self;
         sv.scrollEnabled = YES;
     }
 }
@@ -119,7 +119,7 @@ static char const * const kBlank = "kBlank";
     }
     
     if ([self isKindOfClass:UIScrollView.class]) {
-        UIScrollView *sv = self;
+        UIScrollView *sv = (UIScrollView *)self;
         if ([sv itemsCount] != 0) {
             return;
         }
@@ -150,7 +150,7 @@ static char const * const kBlank = "kBlank";
     [view prepare];
     
     if ([self isKindOfClass:UIScrollView.class]) {
-        UIScrollView *sv = self;
+        UIScrollView *sv = (UIScrollView *)self;
         sv.scrollEnabled = NO;
     }
 }
