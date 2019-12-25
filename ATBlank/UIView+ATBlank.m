@@ -35,7 +35,7 @@ static char const * const kBlank = "kBlank";
 #pragma mark - Setter, Getter
 
 - (BOOL)isBlankVisible {
-    return self.blankView != nil;
+    return self.blankView ? !self.blankView.hidden : NO;
 }
 
 - (ATBlank *)blank {
@@ -118,40 +118,39 @@ static char const * const kBlank = "kBlank";
         return;
     }
     
+    int count = 0;
     if ([self isKindOfClass:UIScrollView.class]) {
         UIScrollView *sv = (UIScrollView *)self;
-        if ([sv itemsCount] != 0) {
-            return;
-        }
+        count = [sv itemsCount];
     }
     
-    if ([self isBlankVisible]) {
+    if (count == 0) {
+        ATBlankView *view = self.blankView;
+        [view reset];
+        
+        if (view.superview == nil) {
+            if ([self isKindOfClass:[UITableView class]] || [self isKindOfClass:[UICollectionView class]] || self.subviews.count > 1) {
+                [self insertSubview:view atIndex:0];
+            }else {
+                [self addSubview:view];
+            }
+        }
+        
+        [view mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.size.centerX.centerY.equalTo(self);
+        }];
+        
+        view.blank = self.blank;
+        view.hidden = NO;
+        
+        [view prepare];
+        
+        if ([self isKindOfClass:UIScrollView.class]) {
+            UIScrollView *sv = (UIScrollView *)self;
+            sv.scrollEnabled = NO;
+        }
+    }else if ([self isBlankVisible]) {
         [self at_invalidate];
-    }
-    
-    ATBlankView *view = self.blankView;
-    [view reset];
-    
-    if (view.superview == nil) {
-        if ([self isKindOfClass:[UITableView class]] || [self isKindOfClass:[UICollectionView class]] || self.subviews.count > 1) {
-            [self insertSubview:view atIndex:0];
-        }else {
-            [self addSubview:view];
-        }
-    }
-    
-    [view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.centerX.centerY.equalTo(self);
-    }];
-    
-    view.blank = self.blank;
-    view.hidden = NO;
-    
-    [view prepare];
-    
-    if ([self isKindOfClass:UIScrollView.class]) {
-        UIScrollView *sv = (UIScrollView *)self;
-        sv.scrollEnabled = NO;
     }
 }
 
