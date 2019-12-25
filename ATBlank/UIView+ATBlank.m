@@ -118,7 +118,7 @@ static char const * const kBlank = "kBlank";
         return;
     }
     
-    int count = 0;
+    NSInteger count = 0;
     if ([self isKindOfClass:UIScrollView.class]) {
         UIScrollView *sv = (UIScrollView *)self;
         count = [sv itemsCount];
