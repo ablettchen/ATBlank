@@ -25,7 +25,7 @@
 static char const * const kBlankView = "kBlankView";
 static char const * const kBlank = "kBlank";
 
-@interface UIView ()<UIGestureRecognizerDelegate>
+@interface UIView ()
 @property (nonatomic, readonly, strong) ATBlankView *blankView;
 @property (strong, nonatomic) ATBlank *blank;
 @end
@@ -47,7 +47,6 @@ static char const * const kBlank = "kBlank";
     if (!view) {
         view = [ATBlankView new];
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(at_tapAction:)];
-        tapGesture.delegate = self;
         view.userInteractionEnabled = YES;
         [view addGestureRecognizer:tapGesture];
         objc_setAssociatedObject(self, &kBlankView, view, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -110,6 +109,10 @@ static char const * const kBlank = "kBlank";
 - (void)setBlank:(ATBlank * _Nullable)blank {
     if (![self at_canDisplay]) {[self at_invalidate];}
     objc_setAssociatedObject(self, &kBlank, blank, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void)resetBlank {
+    if ([self isBlankVisible]) {[self at_invalidate];}
 }
 
 - (void)reloadBlank {
