@@ -20,16 +20,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 
-    ATBlank *blank = defaultBlank(ATBlankTypeFailure);
+    ATBlank *blank = [ATBlank defaultBlankWithType:ATBlankTypeFailure];
     blank.desc = [[NSAttributedString alloc] initWithString:@"10001"];
+    __weak typeof(self)weakSelf = self;
     blank.tapBlock = ^{
-        [self.view blankConfReset];
+        [weakSelf.view blankConfReset];
     };
     [self.view setBlank:blank];
     [self.view reloadBlank];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.view.updateBlankConf(^(ATBlankConf * _Nonnull conf) {
+        weakSelf.view.updateBlankConf(^(ATBlankConf * _Nonnull conf) {
             conf.backgroundColor = [UIColor blackColor];
             conf.titleFont = [UIFont boldSystemFontOfSize:14];
             conf.titleColor = [UIColor whiteColor];

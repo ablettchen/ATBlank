@@ -25,17 +25,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ATBlankConf : NSObject
 
 @property (strong, nonatomic) UIColor *backgroundColor;
-
 @property (strong, nonatomic) UIColor *titleColor;
 @property (strong, nonatomic) UIFont *titleFont;
-
 @property (strong, nonatomic) UIColor *descColor;
 @property (strong, nonatomic) UIFont *descFont;
 
 @property (assign, nonatomic) CGFloat verticalOffset;
 @property (assign, nonatomic) CGFloat titleToImagePadding;
 @property (assign, nonatomic) CGFloat descToTitlePadding;
-
 @property (assign, nonatomic) CGFloat isTapEnable;
 
 - (void)reset;

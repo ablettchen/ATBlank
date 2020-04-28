@@ -1,7 +1,6 @@
 //
 //  ATBlank.h
 //  ATBlank
-//  https://github.com/ablettchen/ATBlank.git
 //
 //  Created by ablett on 2018/11/5.
 //  Copyright (c) 2019 ablett. All rights reserved.
@@ -39,9 +38,7 @@ typedef NS_ENUM(NSUInteger, ATBlankType) {
  @param desc 描述
  @return 空白页实例
  */
-+ (ATBlank *)blankWithImage:(nullable UIImage *)image
-                      title:(nullable NSString *)title
-                       desc:(nullable NSString *)desc;
++ (ATBlank *)blankWithImage:(nullable UIImage *)image title:(nullable NSString *)title desc:(nullable NSString *)desc;
 
 /**
  获取默认空白页
@@ -49,7 +46,7 @@ typedef NS_ENUM(NSUInteger, ATBlankType) {
  @param type 空白页类型
  @return 空白页实例
  */
-+ (ATBlank *)defaultBlank:(enum ATBlankType)type;
++ (ATBlank *)defaultBlankWithType:(enum ATBlankType)type;
 
 /**
  默认空白页图片
@@ -57,20 +54,8 @@ typedef NS_ENUM(NSUInteger, ATBlankType) {
  @param type 空白页类型
  @return 图片实例
  */
-+ (UIImage *)defaultImage:(enum ATBlankType)type;
++ (UIImage *)defaultImageWithType:(enum ATBlankType)type;
 
 @end
-
-NS_INLINE ATBlank *defaultBlank(enum ATBlankType type) {
-    return [ATBlank defaultBlank:type];
-}
-
-NS_INLINE UIImage *blankImage(enum ATBlankType type) {
-    return [ATBlank defaultImage:type];
-}
-
-NS_INLINE ATBlank *blankMake(UIImage * _Nullable image, NSString * _Nullable title, NSString * _Nullable desc) {
-    return [ATBlank blankWithImage:image title:title desc:desc];
-}
 
 NS_ASSUME_NONNULL_END

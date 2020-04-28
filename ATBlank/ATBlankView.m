@@ -216,10 +216,8 @@
 - (void)reset {
     
     self.backgroundColor = [UIColor whiteColor];
-    
     self.titleFont = [UIFont systemFontOfSize:14];
     self.titleColor = [UIColor darkGrayColor];
-    
     self.descFont = [UIFont systemFontOfSize:12];
     self.descColor = [UIColor grayColor];
     

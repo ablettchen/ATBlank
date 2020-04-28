@@ -1,7 +1,6 @@
 //
 //  UIScrollView+ATBlank.m
 //  ATBlank
-//  https://github.com/ablettchen/ATBlank.git
 //
 //  Created by ablett on 2018/11/5.
 //  Copyright (c) 2019 ablett. All rights reserved.
@@ -12,10 +11,8 @@
 @implementation UIScrollView (ATBlank)
 
 - (NSInteger)itemsCount {
-    
     NSInteger items = 0;
     if (![self respondsToSelector:@selector(dataSource)]) {return items;}
-    
     if ([self isKindOfClass:[UITableView class]]) {
         UITableView *tableView = (UITableView *)self;
         id <UITableViewDataSource> dataSource = tableView.dataSource;

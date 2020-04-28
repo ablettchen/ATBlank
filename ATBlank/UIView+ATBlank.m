@@ -50,9 +50,7 @@ static char const * const kBlank = "kBlank";
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
             @strongify(self);
             if (!self.blank.isTapEnable) {return;}
-            if (self.blank.tapBlock) {
-                self.blank.tapBlock();
-            }
+            if (self.blank.tapBlock) {self.blank.tapBlock();}
         }];
         view.userInteractionEnabled = YES;
         [view addGestureRecognizer:tapGesture];
@@ -117,9 +115,7 @@ static char const * const kBlank = "kBlank";
 
 - (void)reloadBlank {
     
-    if (![self at_canDisplay]) {
-        return;
-    }
+    if (![self at_canDisplay]) {return;}
     
     NSInteger count = 0;
     if ([self isKindOfClass:UIScrollView.class]) {
