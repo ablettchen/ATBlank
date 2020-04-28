@@ -70,16 +70,17 @@ static char const * const kBlank = "kBlank";
         if (!self) return;
         ATBlankConf *conf_ = [ATBlankConf new];
         if (block) {block(conf_);}
+        __weak typeof(conf_)weakConf = conf_;
         self.blankView.update(^(ATBlankConf * _Nonnull conf) {
-            conf.backgroundColor        = conf_.backgroundColor;
-            conf.titleColor             = conf_.titleColor;
-            conf.titleFont              = conf_.titleFont;
-            conf.descColor              = conf_.descColor;
-            conf.descFont               = conf_.descFont;
-            conf.verticalOffset         = conf_.verticalOffset;
-            conf.titleToImagePadding    = conf_.titleToImagePadding;
-            conf.descToTitlePadding     = conf_.descToTitlePadding;
-            conf.isTapEnable            = conf_.isTapEnable;
+            conf.backgroundColor        = weakConf.backgroundColor;
+            conf.titleColor             = weakConf.titleColor;
+            conf.titleFont              = weakConf.titleFont;
+            conf.descColor              = weakConf.descColor;
+            conf.descFont               = weakConf.descFont;
+            conf.verticalOffset         = weakConf.verticalOffset;
+            conf.titleToImagePadding    = weakConf.titleToImagePadding;
+            conf.descToTitlePadding     = weakConf.descToTitlePadding;
+            conf.isTapEnable            = weakConf.isTapEnable;
         });
     };
 }
