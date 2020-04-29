@@ -130,7 +130,9 @@ static char const * const kBlank = "kBlank";
     
     if (count == 0) {
         
+        @weakify(self)
         void(^addBlankView)(UIView *view) = ^(UIView *view) {
+            @strongify(self)
             if (view.superview == nil) {
                 if ([self isKindOfClass:[UITableView class]] || [self isKindOfClass:[UICollectionView class]] || self.subviews.count > 1) {
                     [self insertSubview:view atIndex:0];
