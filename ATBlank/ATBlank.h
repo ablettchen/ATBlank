@@ -19,6 +19,8 @@ typedef NS_ENUM(NSUInteger, ATBlankType) {
 
 @interface ATBlank : NSObject
 
+@property (strong, nonatomic, nullable) UIView *customBlankView;            ///< 自定义空白页面，默认为空
+
 @property (strong, nonatomic, nullable) UIImage *image;                     ///< 展示图片
 @property (strong, readonly, nonatomic, nullable) UIImage *loadingImage;    ///< 展示图片
 @property (copy, nonatomic, nullable) NSAttributedString *title;            ///< 标题

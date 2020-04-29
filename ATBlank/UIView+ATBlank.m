@@ -35,6 +35,7 @@ static char const * const kBlank = "kBlank";
 #pragma mark - Setter, Getter
 
 - (BOOL)isBlankVisible {
+    if (self.blank.customBlankView) {return !self.blank.customBlankView.hidden;}
     return self.blankView ? !self.blankView.hidden : NO;
 }
 
@@ -92,7 +93,10 @@ static char const * const kBlank = "kBlank";
 }
 
 - (void)at_invalidate {
-    if (self.blankView) {
+    if (self.blank.customBlankView) {
+        self.blank.customBlankView.hidden = YES;
+        [self.blank.customBlankView removeFromSuperview];
+    }else if (self.blankView) {
         [self.blankView reset];
         self.blankView.hidden = YES;
         [self.blankView removeFromSuperview];
@@ -125,30 +129,35 @@ static char const * const kBlank = "kBlank";
     }
     
     if (count == 0) {
-        ATBlankView *view = self.blankView;
-        [view reset];
         
-        if (view.superview == nil) {
-            if ([self isKindOfClass:[UITableView class]] || [self isKindOfClass:[UICollectionView class]] || self.subviews.count > 1) {
-                [self insertSubview:view atIndex:0];
-            }else {
-                [self addSubview:view];
+        void(^addBlankView)(UIView *view) = ^(UIView *view) {
+            if (view.superview == nil) {
+                if ([self isKindOfClass:[UITableView class]] || [self isKindOfClass:[UICollectionView class]] || self.subviews.count > 1) {
+                    [self insertSubview:view atIndex:0];
+                }else {
+                    [self addSubview:view];
+                }
             }
+            [view mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.size.centerX.centerY.equalTo(self);
+            }];
+        };
+
+        if (self.blank.customBlankView) {
+            addBlankView(self.blank.customBlankView);
+            self.blank.customBlankView.hidden = NO;
+        }else {
+            ATBlankView *view = self.blankView;
+            addBlankView(view);
+            view.blank = self.blank;
+            view.hidden = NO;
+            [view prepare];
         }
-        
-        [view mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.size.centerX.centerY.equalTo(self);
-        }];
-        
-        view.blank = self.blank;
-        view.hidden = NO;
-        
-        [view prepare];
-        
         if ([self isKindOfClass:UIScrollView.class]) {
             UIScrollView *sv = (UIScrollView *)self;
             sv.scrollEnabled = NO;
         }
+        
     }else if ([self isBlankVisible]) {
         [self at_invalidate];
     }
