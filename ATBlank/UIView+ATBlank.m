@@ -148,6 +148,7 @@ static char const * const kBlank = "kBlank";
             self.blank.customBlankView.hidden = NO;
         }else {
             ATBlankView *view = self.blankView;
+            [view reset];
             addBlankView(view);
             view.blank = self.blank;
             view.hidden = NO;
