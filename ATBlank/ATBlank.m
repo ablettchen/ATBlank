@@ -27,6 +27,17 @@
     return self;
 }
 
+- (CAAnimation *)animation {
+    if (_animation) {return _animation;}
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animation.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
+    animation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeRotation(M_PI_2, 0.0, 0.0, 1.0) ];
+    animation.duration = 0.25;
+    animation.cumulative = YES;
+    animation.repeatCount = MAXFLOAT;
+    return animation;
+}
+
 + (UIImage *)blankImageWithNamed:(NSString *)imageName {
     NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle bundleForClass:[ATBlank class]] pathForResource:@"ATBlank" ofType:@"bundle"]];
     NSString *name = [NSString stringWithFormat:@"%@@2x", imageName];
