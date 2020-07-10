@@ -117,6 +117,12 @@
         self.descLabel.textColor = self.conf.descColor;
         
         self.userInteractionEnabled = self.conf.isTapEnable;
+        
+        if (self.contentView.superview) {
+            [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.contentView.superview).offset(self.conf.verticalOffset);
+            }];
+        }
     };
 }
 
@@ -181,12 +187,16 @@
         make.bottom.equalTo(lastAttribute);
     }];
     
+    [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self).offset(self.conf.verticalOffset);
+    }];
+    
     if (self.blank.isAnimating) {
         [self.imageView.layer addAnimation:self.blank.animation forKey:@"BlankImageViewAnimationKey"];
     }else if ([self.imageView.layer animationForKey:@"BlankImageViewAnimationKey"]) {
         [self.imageView.layer removeAnimationForKey:@"BlankImageViewAnimationKey"];
     }
-    
+
     [UIView animateWithDuration:0.25 animations:^{
         self.contentView.alpha = 1.f;
     } completion:^(BOOL finished) {}];

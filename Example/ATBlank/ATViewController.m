@@ -36,6 +36,7 @@
             conf.titleColor = [UIColor whiteColor];
             conf.descFont = [UIFont boldSystemFontOfSize:14];
             conf.descColor = [UIColor whiteColor];
+            conf.verticalOffset = 200;
         });
     });
 }
