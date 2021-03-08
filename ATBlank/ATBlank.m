@@ -65,7 +65,7 @@
 + (UIImage *)defaultImageWithType:(enum ATBlankType)type {
     switch (type) {
         case ATBlankTypeFailure:{
-            return [ATBlank blankImageWithNamed:@"blank_failure"];
+            return [ATBlank blankImageWithNamed:@"blank_fail"];
         }break;
         case ATBlankTypeNoData:{
             return [ATBlank blankImageWithNamed:@"blank_nodata"];
