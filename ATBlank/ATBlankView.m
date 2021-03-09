@@ -227,9 +227,9 @@
     
     self.backgroundColor = [UIColor whiteColor];
     self.titleFont = [UIFont systemFontOfSize:14];
-    self.titleColor = [UIColor darkGrayColor];
+    self.titleColor = [UIColor colorWithRed:51.0 / 255.0 green:51.0 / 255.0 blue:51.0 / 255.0 alpha:1.0];
     self.descFont = [UIFont systemFontOfSize:12];
-    self.descColor = [UIColor grayColor];
+    self.descColor = [UIColor colorWithRed:153.0 / 255.0 green:153.0 / 255.0 blue:153.0 / 255.0 alpha:1.0];
     
     self.verticalOffset = 0.0;
     self.titleToImagePadding = 15.0;

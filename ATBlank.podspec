@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ATBlank'
-  s.version          = '0.3.11'
+  s.version          = '0.3.12'
   s.summary          = 'blank view'
   s.homepage         = 'https://github.com/ablettchen/ATBlank'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
