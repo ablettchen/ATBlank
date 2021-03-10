@@ -77,7 +77,7 @@
     return nil;
 }
 
-+ (ATBlank *)blankWithImage:(nullable UIImage *)image attributedTitle:(nullable NSString *)attributedTitle attributedDesc:(nullable NSString *)attributedDesc {
++ (ATBlank *)blankWithImage:(nullable UIImage *)image attributedTitle:(nullable NSAttributedString *)attributedTitle attributedDesc:(nullable NSAttributedString *)attributedDesc {
     ATBlank *blank = [ATBlank new];
     blank.image = image;
     blank.title = attributedTitle;
