@@ -42,6 +42,10 @@ typedef NS_ENUM(NSUInteger, ATBlankType) {
  */
 + (ATBlank *)blankWithImage:(nullable UIImage *)image title:(nullable NSString *)title desc:(nullable NSString *)desc;
 
++ (ATBlank *)blankWithImage:(nullable UIImage *)image attributedTitle:(nullable NSString *)attributedTitle attributedDesc:(nullable NSString *)attributedDesc;
+
+
+
 /**
  获取默认空白页
  

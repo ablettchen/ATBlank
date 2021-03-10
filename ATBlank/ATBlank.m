@@ -77,12 +77,16 @@
     return nil;
 }
 
-+ (ATBlank *)blankWithImage:(UIImage *)image title:(NSString *)title desc:(NSString *)desc {
++ (ATBlank *)blankWithImage:(nullable UIImage *)image attributedTitle:(nullable NSString *)attributedTitle attributedDesc:(nullable NSString *)attributedDesc {
     ATBlank *blank = [ATBlank new];
     blank.image = image;
-    blank.title = [[NSAttributedString alloc] initWithString:title?:@""];
-    blank.desc = [[NSAttributedString alloc] initWithString:desc?:@""];
+    blank.title = attributedTitle;
+    blank.desc = attributedDesc;
     return blank;
+}
+
++ (ATBlank *)blankWithImage:(UIImage *)image title:(NSString *)title desc:(NSString *)desc {
+    return [ATBlank blankWithImage:image attributedTitle:[[NSAttributedString alloc] initWithString:title?:@""] attributedDesc:[[NSAttributedString alloc] initWithString:desc?:@""]];
 }
 
 @end
