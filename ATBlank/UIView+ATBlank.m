@@ -27,19 +27,19 @@ static char const * const kBlank = "kBlank";
 
 @interface UIView ()
 @property (nonatomic, readonly, strong) ATBlankView *blankView;
-@property (strong, nonatomic) ATBlank *blank;
+@property (strong, nonatomic) ATBlank *at_blank;
 @end
 
 @implementation UIView (ATBlank)
 
 #pragma mark - Setter, Getter
 
-- (BOOL)isBlankVisible {
-    if (self.blank.customBlankView) {return !self.blank.customBlankView.hidden;}
+- (BOOL)at_isBlankVisible {
+    if (self.at_blank.customBlankView) {return !self.at_blank.customBlankView.hidden;}
     return self.blankView ? !self.blankView.hidden : NO;
 }
 
-- (ATBlank *)blank {
+- (ATBlank *)at_blank {
     return objc_getAssociatedObject(self, &kBlank);
 }
 
@@ -50,8 +50,8 @@ static char const * const kBlank = "kBlank";
         @weakify(self);
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
             @strongify(self);
-            if (!self.blank.isTapEnable) {return;}
-            if (self.blank.tapBlock) {self.blank.tapBlock();}
+            if (!self.at_blank.isTapEnable) {return;}
+            if (self.at_blank.tapBlock) {self.at_blank.tapBlock();}
         }];
         view.userInteractionEnabled = YES;
         [view addGestureRecognizer:tapGesture];
@@ -64,7 +64,7 @@ static char const * const kBlank = "kBlank";
     objc_setAssociatedObject(self, &kBlankView, blankView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void (^)(void (^ _Nonnull)(ATBlankConf * _Nonnull)))updateBlankConf {
+- (void (^)(void (^ _Nonnull)(ATBlankConf * _Nonnull)))at_updateBlankConf {
     @weakify(self);
     return ^void(void(^block)(ATBlankConf *config)) {
         @strongify(self);
@@ -89,13 +89,13 @@ static char const * const kBlank = "kBlank";
 #pragma mark - Privite
 
 - (BOOL)at_canDisplay {
-    return self.blank != nil;
+    return self.at_blank != nil;
 }
 
 - (void)at_invalidate {
-    if (self.blank.customBlankView) {
-        self.blank.customBlankView.hidden = YES;
-        [self.blank.customBlankView removeFromSuperview];
+    if (self.at_blank.customBlankView) {
+        self.at_blank.customBlankView.hidden = YES;
+        [self.at_blank.customBlankView removeFromSuperview];
     }else if (self.blankView) {
         [self.blankView reset];
         self.blankView.hidden = YES;
@@ -109,23 +109,23 @@ static char const * const kBlank = "kBlank";
 
 #pragma mark - Public
 
-- (void)setBlank:(ATBlank * _Nullable)blank {
+- (void)setAt_Blank:(ATBlank * _Nullable)blank {
     if (![self at_canDisplay]) {[self at_invalidate];}
     objc_setAssociatedObject(self, &kBlank, blank, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)resetBlank {
-    if ([self isBlankVisible]) {[self at_invalidate];}
+- (void)at_resetBlank {
+    if ([self at_isBlankVisible]) {[self at_invalidate];}
 }
 
-- (void)reloadBlank {
+- (void)at_reloadBlank {
     
     if (![self at_canDisplay]) {return;}
     
     NSInteger count = 0;
     if ([self isKindOfClass:UIScrollView.class]) {
         UIScrollView *sv = (UIScrollView *)self;
-        count = [sv itemsCount];
+        count = [sv at_itemsCount];
     }
     
     if (count == 0) {
@@ -145,14 +145,14 @@ static char const * const kBlank = "kBlank";
             }];
         };
 
-        if (self.blank.customBlankView) {
-            addBlankView(self.blank.customBlankView);
-            self.blank.customBlankView.hidden = NO;
+        if (self.at_blank.customBlankView) {
+            addBlankView(self.at_blank.customBlankView);
+            self.at_blank.customBlankView.hidden = NO;
         }else {
             ATBlankView *view = self.blankView;
             [view reset];
             addBlankView(view);
-            view.blank = self.blank;
+            view.blank = self.at_blank;
             view.hidden = NO;
             [view prepare];
         }
@@ -161,12 +161,12 @@ static char const * const kBlank = "kBlank";
             sv.scrollEnabled = NO;
         }
         
-    }else if ([self isBlankVisible]) {
+    }else if ([self at_isBlankVisible]) {
         [self at_invalidate];
     }
 }
 
-- (void)blankConfReset {
+- (void)at_blankConfReset {
     self.blankView.update(^(ATBlankConf * _Nonnull conf) {
         [conf reset];
     });

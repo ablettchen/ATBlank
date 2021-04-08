@@ -10,7 +10,7 @@
 
 @implementation UIScrollView (ATBlank)
 
-- (NSInteger)itemsCount {
+- (NSInteger)at_itemsCount {
     NSInteger items = 0;
     if (![self respondsToSelector:@selector(dataSource)]) {return items;}
     if ([self isKindOfClass:[UITableView class]]) {

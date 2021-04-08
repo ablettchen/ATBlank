@@ -14,17 +14,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIView (ATBlank)
 
-@property (nonatomic, copy, readonly) void(^updateBlankConf)(void(^block)(ATBlankConf *conf));
+@property (nonatomic, copy, readonly) void(^at_updateBlankConf)(void(^block)(ATBlankConf *conf));
 
-@property (assign, readonly, nonatomic) BOOL isBlankVisible;
+@property (assign, readonly, nonatomic) BOOL at_isBlankVisible;
 
-- (void)setBlank:(ATBlank * _Nullable)blank;
+- (void)setAt_Blank:(ATBlank * _Nullable)blank;
 
-- (void)reloadBlank;
+- (void)at_reloadBlank;
 
-- (void)resetBlank;
+- (void)at_resetBlank;
 
-- (void)blankConfReset;
+- (void)at_blankConfReset;
 
 @end
 

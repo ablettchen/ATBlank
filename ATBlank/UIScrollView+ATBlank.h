@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIScrollView (ATBlank)
 
-- (NSInteger)itemsCount;
+- (NSInteger)at_itemsCount;
 
 @end
 
