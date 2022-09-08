@@ -1,9 +1,10 @@
 //
 //  ATBlank.m
-//  ZHIsland
+//  ATBlank
+//  https://github.com/ablettchen/ATBlank.git
 //
-//  Created by ablett on 2022/9/2.
-//  Copyright © 2022 zhisland. All rights reserved.
+//  Created by ablett on 2018/11/5.
+//  Copyright (c) 2019 ablett. All rights reserved.
 //
 
 #import "ATBlank.h"
@@ -325,7 +326,7 @@
 
 
 - (void)setAtBlank:(ATBlank *)atBlank {
-    if (!atBlank) { [self _zhInvalidate]; }
+    if (!atBlank) { [self _atInvalidate]; }
     objc_setAssociatedObject(self, @selector(atBlank), atBlank, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
@@ -440,7 +441,7 @@
     
     if (self.atIsBlankVisible) {
         
-        [self _zhInvalidate];
+        [self _atInvalidate];
     }
 }
 
@@ -453,7 +454,7 @@
 
 #pragma mark - private
 
-- (void)_zhInvalidate {
+- (void)_atInvalidate {
     
     if (self.atBlank.customView) {
         self.atBlank.customView.hidden = YES;

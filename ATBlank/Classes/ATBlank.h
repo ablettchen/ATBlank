@@ -1,9 +1,10 @@
 //
 //  ATBlank.h
-//  ZHIsland
+//  ATBlank
+//  https://github.com/ablettchen/ATBlank.git
 //
-//  Created by ablett on 2022/9/2.
-//  Copyright © 2022 zhisland. All rights reserved.
+//  Created by ablett on 2018/11/5.
+//  Copyright (c) 2019 ablett. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

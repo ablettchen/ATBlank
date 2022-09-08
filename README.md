@@ -14,7 +14,7 @@
     __weak typeof(self) wSelf = self;
     
     // 更新空白样式配置：可选，如不配置，则取默认配置
-    self.view.zhUpdateBlankConf(^(ATBlankConf * _Nonnull conf) {
+    self.view.atUpdateBlankConf(^(ATBlankConf * _Nonnull conf) {
         conf.backgroundColor = UIColor.blackColor;
         conf.titleFont = [UIFont boldSystemFontOfSize:16];
         conf.titleColor = UIColor.whiteColor;
