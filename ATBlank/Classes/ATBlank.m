@@ -18,7 +18,7 @@
 
 
 @interface NSBundle (ATBlank)
-+ (NSBundle * _Nullable)ATBlank;
++ (NSBundle * _Nullable)atBlank;
 @end
 
 @implementation NSBundle (ATBlank)
