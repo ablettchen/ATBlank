@@ -8,8 +8,8 @@
 //
 
 #import "ATViewController.h"
-#import "UIScrollView+ATBlank.h"
-#import "UIView+ATBlank.h"
+#import <ATBlank/ATBlank.h>
+
 
 @interface ATViewController ()
 @end
@@ -18,32 +18,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
 
-    ATBlank *blank = [ATBlank defaultBlankWithType:ATBlankTypeFailure];
-    blank.desc = [[NSAttributedString alloc] initWithString:@"10001"];
-    __weak typeof(self)weakSelf = self;
-    blank.tapBlock = ^{
-        [weakSelf.view at_blankConfReset];
-    };
-    [self.view setAt_Blank:blank];
-    [self.view at_reloadBlank];
+    __weak typeof(self) wSelf = self;
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        weakSelf.view.at_updateBlankConf(^(ATBlankConf * _Nonnull conf) {
-            conf.backgroundColor = [UIColor blackColor];
-            conf.titleFont = [UIFont boldSystemFontOfSize:14];
-            conf.titleColor = [UIColor whiteColor];
-            conf.descFont = [UIFont boldSystemFontOfSize:14];
-            conf.descColor = [UIColor whiteColor];
-            conf.verticalOffset = 200;
-        });
+    // 更新空白样式配置：可选，如不配置，则取默认配置
+    self.view.atUpdateBlankConf(^(ATBlankConf * _Nonnull conf) {
+        conf.backgroundColor = UIColor.blackColor;
+        conf.titleFont = [UIFont boldSystemFontOfSize:16];
+        conf.titleColor = UIColor.whiteColor;
+        conf.verticalOffset = -100;
     });
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    
+    // 创建空白对象
+    ATBlank *blank = ATBlank.failureBlank;
+    blank.title = @"哎呀，加载失败了";
+    blank.action = ^{
+        // 重置样式设置
+        [wSelf.view atResetBlankConf];
+    };
+    
+    // 关联空白对象
+    self.view.atBlank = blank;
+    
+    // 刷新显示
+    [self.view atReloadBlank];
 }
 
 @end

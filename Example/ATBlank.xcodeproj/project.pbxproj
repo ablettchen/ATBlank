@@ -239,13 +239,11 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ATBlank_Example/Pods-ATBlank_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ATBlank/ATBlank.framework",
-				"${BUILT_PRODUCTS_DIR}/ATCategories/ATCategories.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ATBlank.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ATCategories.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
