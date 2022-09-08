@@ -41,6 +41,27 @@
 }
 @end
 
+@interface UIColor (ATBlank)
++ (UIColor *)_BG1Color;
++ (UIColor *)_F2Color;
++ (UIColor *)_SCPColor;
++ (UIColor *)_SCColor;
+@end
+
+@implementation  UIColor (ATBlank)
++ (UIColor *)_BG1Color {
+    return UIColor.whiteColor;
+}
++ (UIColor *)_F2Color {
+    return [UIColor.blackColor colorWithAlphaComponent:0.54];
+}
++ (UIColor *)_SCPColor {
+    return [UIColor colorWithRed:192.0 / 255.0 green:146.0 / 255.0 blue:81.0 / 255.0 alpha:1.0];
+}
++ (UIColor *)_SCColor {
+    return [UIColor colorWithRed:206.0 / 255.0 green:172.0 / 255.0 blue:126.0 / 255.0 alpha:1.0];
+}
+@end
 
 @implementation ATBlank
 
@@ -290,19 +311,14 @@
 
 - (void)reset {
     
-    UIColor *bg1Color = UIColor.whiteColor;
-    UIColor *f2Color = [UIColor.blackColor colorWithAlphaComponent:0.54];
-    UIColor *scpColor = [UIColor colorWithRed:192.0 / 255.0 green:146.0 / 255.0 blue:81.0 / 255.0 alpha:1.0];
-    UIColor *scColor = [UIColor colorWithRed:206.0 / 255.0 green:172.0 / 255.0 blue:126.0 / 255.0 alpha:1.0];
-    
-    self.backgroundColor = bg1Color;
+    self.backgroundColor = UIColor._BG1Color;
     self.titleFont = [UIFont systemFontOfSize:16];
-    self.titleColor = f2Color;
-    self.actionTitleNormalColor = scpColor;
-    self.actionTitleHighlightedColor = scColor;
+    self.titleColor = UIColor._F2Color;
+    self.actionTitleNormalColor = UIColor._SCPColor;
+    self.actionTitleHighlightedColor = UIColor._SCColor;
     self.actionFont = [UIFont systemFontOfSize:16];
     self.actionBorderWidth = 1.0;
-    self.actionBorderColor = scpColor;
+    self.actionBorderColor = UIColor._SCPColor;
     self.actionCornerRadius = 3.0;
     
     self.verticalOffset = -11.0;
