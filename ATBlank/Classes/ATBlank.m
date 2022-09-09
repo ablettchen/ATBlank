@@ -21,8 +21,10 @@
 + (NSBundle * _Nullable)atBlank;
 @end
 
+
+
 @implementation NSBundle (ATBlank)
-+ (NSBundle *)atBlank {
++ (NSBundle * _Nullable)atBlank {
     NSString *path = [[[NSBundle bundleForClass:ATBlank.class] resourcePath] stringByAppendingString:@"/ATBlank.bundle"];
     if (path) {
         return [NSBundle bundleWithPath:path];
@@ -31,41 +33,75 @@
 }
 @end
 
+
+
 @interface UIImage (ATBlank)
-+ (UIImage *)atBlankImageNamed:(NSString *)name;
++ (UIImage * _Nullable)atBlankImageNamed:(NSString * _Nullable)name;
 @end
 
+
+
 @implementation UIImage (ATBlank)
-+ (UIImage *)atBlankImageNamed:(NSString *)name {
++ (UIImage * _Nullable)atBlankImageNamed:(NSString * _Nullable)name {
     return [UIImage imageNamed:name inBundle:[NSBundle atBlank] compatibleWithTraitCollection:nil];
 }
 @end
 
+
+
 @interface UIColor (ATBlank)
-+ (UIColor *)_BG1Color;
-+ (UIColor *)_F2Color;
-+ (UIColor *)_SCPColor;
-+ (UIColor *)_SCColor;
++ (UIColor * _Nonnull)_BG1Color;
++ (UIColor * _Nonnull)_F2Color;
++ (UIColor * _Nonnull)_SCPColor;
++ (UIColor * _Nonnull)_SCColor;
 @end
 
+
+
 @implementation  UIColor (ATBlank)
-+ (UIColor *)_BG1Color {
+
+#pragma mark - private
++ (UIColor * _Nonnull)_BG1Color {
     return UIColor.whiteColor;
 }
-+ (UIColor *)_F2Color {
+
++ (UIColor * _Nonnull)_F2Color {
     return [UIColor.blackColor colorWithAlphaComponent:0.54];
 }
-+ (UIColor *)_SCPColor {
+
++ (UIColor * _Nonnull)_SCPColor {
     return [UIColor colorWithRed:192.0 / 255.0 green:146.0 / 255.0 blue:81.0 / 255.0 alpha:1.0];
 }
-+ (UIColor *)_SCColor {
+
++ (UIColor * _Nonnull)_SCColor {
     return [UIColor colorWithRed:206.0 / 255.0 green:172.0 / 255.0 blue:126.0 / 255.0 alpha:1.0];
 }
+
+#pragma mark - public
++ (UIColor * _Nonnull (^)(uint32_t))atFromHex {
+    UIColor*(^colorO)(uint32_t) = ^(uint32_t hex) {
+        return UIColor.atFromHexA(hex, 1.0);
+    };
+    return colorO;
+}
+
++ (UIColor * _Nonnull (^)(uint32_t, CGFloat))atFromHexA {
+    UIColor*(^colorO)(uint32_t, CGFloat) = ^(uint32_t hex, CGFloat a) {
+        return [UIColor colorWithRed:((hex & 0xFF0000) >> 16) / 255.0
+                               green:((hex & 0xFF00) >> 8) / 255.0
+                                blue:(hex & 0xFF) / 255.0
+                               alpha:a];
+    };
+    return colorO;
+}
+
 @end
+
+
 
 @implementation ATBlank
 
-+ (ATBlank *)noNetworkBlank {
++ (ATBlank * _Nonnull)noNetworkBlank {
     ATBlank *obj = ATBlank.new;
     obj.type = ATBlankTypeNoNetwork;
     obj.isTapEnable = YES;
@@ -75,7 +111,7 @@
     return obj;
 }
 
-+ (ATBlank *)failureBlank {
++ (ATBlank * _Nonnull)failureBlank {
     ATBlank *obj = ATBlank.new;
     obj.type = ATBlankTypeFailure;
     obj.isTapEnable = YES;
@@ -85,7 +121,7 @@
     return obj;
 }
 
-+ (ATBlank *)noDataBlank {
++ (ATBlank * _Nonnull)noDataBlank {
     ATBlank *obj = ATBlank.new;
     obj.type = ATBlankTypeNoData;
     obj.isTapEnable = YES;
@@ -97,15 +133,17 @@
 @end
 
 
+
 @interface ATBlankView ()
-@property (nonatomic, strong) UIView *contentView;
-@property (nonatomic, strong) UIImageView *iconView;
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UIButton *actionButtton;
+@property (nonatomic, strong, nonnull) UIView *contentView;
+@property (nonatomic, strong, nonnull) UIImageView *iconView;
+@property (nonatomic, strong, nonnull) UILabel *titleLabel;
+@property (nonatomic, strong, nonnull) UIButton *actionButtton;
 
-@property (strong, nonatomic) ATBlankConf *conf;
-
+@property (strong, nonatomic, nonnull) ATBlankConf *conf;
 @end
+
+
 
 @implementation ATBlankView
 
@@ -244,7 +282,7 @@
 
 #pragma mark - getter
 
-- (UIView *)contentView {
+- (UIView * _Nonnull)contentView {
     if (!_contentView) {
         _contentView = [UIView new];
         _contentView.alpha = 0;
@@ -252,7 +290,7 @@
     return _contentView;
 }
 
-- (UIImageView *)iconView {
+- (UIImageView * _Nonnull)iconView {
     if (!_iconView) {
         _iconView = [UIImageView new];
         _iconView.contentMode = UIViewContentModeScaleAspectFit;
@@ -261,7 +299,7 @@
     return _iconView;
 }
 
-- (UILabel *)titleLabel {
+- (UILabel * _Nonnull)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [UILabel new];
         _titleLabel.userInteractionEnabled = YES;
@@ -272,7 +310,7 @@
     return _titleLabel;
 }
 
-- (UIButton *)actionButtton {
+- (UIButton * _Nonnull)actionButtton {
     if (!_actionButtton) {
         _actionButtton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_actionButtton addTarget:self action:@selector(_butttonAction) forControlEvents:UIControlEventTouchUpInside];
@@ -280,7 +318,7 @@
     return _actionButtton;
 }
 
-- (ATBlankConf *)conf {
+- (ATBlankConf * _Nonnull)conf {
     if (!_conf) {
         _conf = [ATBlankConf new];
     }
@@ -289,7 +327,7 @@
 
 #pragma mark - setter
 
-- (void)setBlank:(ATBlank *)blank {
+- (void)setBlank:(ATBlank * _Nullable)blank {
     _blank = blank;
     self.iconView.image = blank.icon;
     self.titleLabel.text = blank.title;
@@ -297,6 +335,7 @@
 }
 
 @end
+
 
 
 @implementation ATBlankConf
@@ -333,13 +372,12 @@
 
 
 @interface UIView ()
-
 @property (nonatomic, strong, nonnull) ATBlankView *atBlankView;
-
 @end
 
-@implementation UIView (ATBlank)
 
+
+@implementation UIView (ATBlank)
 
 - (void)setAtBlank:(ATBlank *)atBlank {
     if (!atBlank) { [self _atInvalidate]; }
@@ -375,24 +413,24 @@
     __weak typeof(self) wSelf = self;
     return ^void(void(^block)(ATBlankConf *config)) {
         if (!wSelf) return;
-        ATBlankConf *conf_ = [ATBlankConf new];
-        if (block) {block(conf_);}
-        __weak typeof(conf_)weakConf = conf_;
+        ATBlankConf *obj = [ATBlankConf new];
+        if (block) {block(obj);}
+        __weak typeof(obj)wConf = obj;
         self.atBlankView.update(^(ATBlankConf * _Nonnull conf) {
-            conf.backgroundColor             = weakConf.backgroundColor;
-            conf.titleColor                  = weakConf.titleColor;
-            conf.titleFont                   = weakConf.titleFont;
-            conf.actionTitleNormalColor      = weakConf.actionTitleNormalColor;
-            conf.actionTitleHighlightedColor = weakConf.actionTitleHighlightedColor;
-            conf.actionFont                  = weakConf.actionFont;
-            conf.actionBorderWidth           = weakConf.actionBorderWidth;
-            conf.actionBorderColor           = weakConf.actionBorderColor;
-            conf.actionCornerRadius          = weakConf.actionCornerRadius;
-            conf.actionToTitleSpacing        = weakConf.actionToTitleSpacing;
-            conf.actionHeight                = weakConf.actionHeight;
-            conf.verticalOffset              = weakConf.verticalOffset;
-            conf.titleToImageSpacing         = weakConf.titleToImageSpacing;
-            conf.isTapEnable                 = weakConf.isTapEnable;
+            conf.backgroundColor             = wConf.backgroundColor;
+            conf.titleColor                  = wConf.titleColor;
+            conf.titleFont                   = wConf.titleFont;
+            conf.actionTitleNormalColor      = wConf.actionTitleNormalColor;
+            conf.actionTitleHighlightedColor = wConf.actionTitleHighlightedColor;
+            conf.actionFont                  = wConf.actionFont;
+            conf.actionBorderWidth           = wConf.actionBorderWidth;
+            conf.actionBorderColor           = wConf.actionBorderColor;
+            conf.actionCornerRadius          = wConf.actionCornerRadius;
+            conf.actionToTitleSpacing        = wConf.actionToTitleSpacing;
+            conf.actionHeight                = wConf.actionHeight;
+            conf.verticalOffset              = wConf.verticalOffset;
+            conf.titleToImageSpacing         = wConf.titleToImageSpacing;
+            conf.isTapEnable                 = wConf.isTapEnable;
         });
     };
 }
@@ -494,16 +532,11 @@
     if (self.atBlank.action) { self.atBlank.action(); }
 }
 
-#pragma mark - getter
-
-
-#pragma mark - setter
-
 @end
 
 
-@implementation UIScrollView (ATBlank)
 
+@implementation UIScrollView (ATBlank)
 
 - (NSUInteger)atItemsCount {
 
